@@ -1,9 +1,27 @@
-一、将图片资源转为UE5可用的图像序列
+一、创建动画图像序列
 1. 将所需的图片资源拖入“Content”文件夹，UE5自动生成对应的纹理文件；
 2. 在每个纹理文件上，右击鼠标选择“Sprite操作/提取Sprite”，
     “Sprite提取模式”改为“网格”，设定正确的“单元宽度”、“单元高度”、“边缘”等信息，完成Sprite的提取；
 3. 选择一组Sprite，右击鼠标选择“创建图像序列”，生成动画图像序列。
 
-二、
+二、PaperZD使用初始化
+1. 在“Content”文件夹中，创建文件夹命名为“PaperZD”；
+2. 在“PaperZD”文件夹中右击菜单选择“PaperZD/AnimationSource”创建1个AnimationSource，命名为“AnimationSource”；
+3. 在“PaperZD”文件夹中右击菜单选择“PaperZD/AnimationSequence”，选择AnimationSource为“AnimationSource”，并重命名为“AS_Idle”；
+4. 双击打开“AnimationSource”，选择“AS_Idle”，设置“Animation Data”为对应的动画图像序列，比如“S_Idle”；
+5. 在“PaperZD”文件夹中右击菜单选择“PaperZD/PaperZd AnimBP”，命名为“AnimBP_Character”；
+6. 打开“AnimBP_Character”，在“AnimGraph”选项页中，右击鼠标输入“play”，
+    在“Animation”分类中，选择对应的AnimationSequence，比如“AS_Idle”，然后将其与“Output Animation”进行关联；
+
+三、角色初始化
+1. 在“PaperZD”文件夹中，创建蓝图类，继承自“PaperZDCharacter”，将该蓝图类命名为“BP_Character”；
+2. 双击打开“BP_Character”，在“视口”页设置“Sprite”（角色）的“源动画序列视图”，调整“胶囊体组件”的大小；
+3. 设置“Animation Component”的“PaperZD/Anim Instance Class”为“AnimBP_Character”；
 
 
+4. 将“BP_Character”拖入关卡中，选择“BP_Character”，输入“poss”，在“Pawn”分类中选择“自动选择玩家”为“玩家0”；
+5. 在“项目设置”中，输入“anti”，设置“渲染/默认设置/抗锯齿方法”为“快速模拟抗锯齿（FXAA）”；
+
+
+6. 打开蓝图类“AnimBP_Character”，在“AnimGraph”选项页中，在“Play AS_Idle”和“Output Animation”之间，添加“Select Animation by Bool”，
+    “Play AS_Idle”连接“Select Animation by Bool”的true，“Play AS_Run”连接“Select Animation by Bool”的false，
