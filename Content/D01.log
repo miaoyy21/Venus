@@ -23,6 +23,7 @@
 三、角色初始化
 1. 在“PaperZD”文件夹中，创建蓝图类，继承自“PaperZDCharacter”，将该蓝图类命名为“BP_Character”；
 2. 双击打开“BP_Character”，在“视口”页设置“Sprite”（角色）的“源动画序列视图”，调整“胶囊体组件”的大小；
+3. 在“胶囊体组件”下，添加1个“摄像机组件”，调整其位置（Y 175）和旋转（Z -90）；
 3. 设置“Animation Component”的“PaperZD/Anim Instance Class”为“AnimBP_Character”；
 
 4. 将“BP_Character”拖入关卡中，选择“BP_Character”，输入“poss”，在“Pawn”分类中选择“自动选择玩家”为“玩家0”；
@@ -38,12 +39,21 @@
 2. 在“世界场景设置”中，设置“游戏模式/游戏模式重载”为“BP_GameMode”；
 3. 双击“BP_GameMode”，设置“默认Pawn类”为“BP_Character”；
 
+六、设置角色跟随按键向左运动
+1. 打开“BP_Character”，选择“角色移动”组件，输入“rotation”，找到“将旋转朝向运动”设置为true；
+2. 选择“BP_Character”，设置“使用控制器旋转Yaw”为false；
+3. 在“胶囊体组件”下，添加一个“弹簧臂组件”，将“Camera”组件移动至新添加的“SpringArm”弹簧臂组件下，
+    设置弹簧臂组件的旋转为“绝对旋转”，旋转Z轴为-90，同时取消“Camera”组件的位置和旋转设定（设为相对旋转）值为0；
+4. 选择“角色移动”组件，输入“rotation”，设置旋转速率Z为-1；
+
+
+
 
 【常用函数】
 GetOwningActor      获取自身的Actor对象
 GetVelocity         获取指定Actor对象的速度
 AddMovementInput    添加指定Actor对象（默认为自身）的运动输入
-NearlyEqualFloat    两个浮点数是否近似相等
+NearlyEqualFloat    两个浮点数是否近似相等，
 
 
 
