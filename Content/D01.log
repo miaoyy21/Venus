@@ -10,18 +10,45 @@
 3. 在“PaperZD”文件夹中右击菜单选择“PaperZD/AnimationSequence”，选择AnimationSource为“AnimationSource”，并重命名为“AS_Idle”；
 4. 双击打开“AnimationSource”，选择“AS_Idle”，设置“Animation Data”为对应的动画图像序列，比如“S_Idle”；
 5. 在“PaperZD”文件夹中右击菜单选择“PaperZD/PaperZd AnimBP”，命名为“AnimBP_Character”；
-6. 打开“AnimBP_Character”，在“AnimGraph”选项页中，右击鼠标输入“play”，
+
+6-1. 打开“AnimBP_Character”，在“AnimGraph”选项页中，右击鼠标输入“play”，
     在“Animation”分类中，选择对应的AnimationSequence，比如“AS_Idle”，然后将其与“Output Animation”进行关联；
+6-2. 打开蓝图类“AnimBP_Character”，在“AnimGraph”选项页中，在“Play AS_Idle”和“Output Animation”之间，添加“Select Animation by Bool”，
+    “Play AS_Idle”连接“Select Animation by Bool”的true，“Play AS_Run”连接“Select Animation by Bool”的false；
+（Select Animation提供的两种方式，即：Select Animation by Bool && Select Animation by Int）。
+6-3. 在蓝图类“AnimBP_Character”中，右击选择“Add New State Machine ...”，创建一个StateMachine，命名“StateMachine”；
+    双击“StateMachine”，在打开的创建不同的“Animation State”（双击后，可以右击鼠标输入“play”， 在“Animation”分类中，选择对应的AnimationSequence），
+    并设置不同“Animation State”的转换规则；
 
 三、角色初始化
 1. 在“PaperZD”文件夹中，创建蓝图类，继承自“PaperZDCharacter”，将该蓝图类命名为“BP_Character”；
 2. 双击打开“BP_Character”，在“视口”页设置“Sprite”（角色）的“源动画序列视图”，调整“胶囊体组件”的大小；
 3. 设置“Animation Component”的“PaperZD/Anim Instance Class”为“AnimBP_Character”；
 
-
 4. 将“BP_Character”拖入关卡中，选择“BP_Character”，输入“poss”，在“Pawn”分类中选择“自动选择玩家”为“玩家0”；
 5. 在“项目设置”中，输入“anti”，设置“渲染/默认设置/抗锯齿方法”为“快速模拟抗锯齿（FXAA）”；
 
+四、控制角色移动
+1. 在“编辑/项目设置.../引擎/输入/轴映射”中添加向左和向右移动的操作按键，比如“Move Left/Right”；
+2. 在蓝图类“BP_Character”的“事件图表”选项页，右击鼠标输入“Move Left/Right”，实现触发按键时，相应的代码控制；
 
-6. 打开蓝图类“AnimBP_Character”，在“AnimGraph”选项页中，在“Play AS_Idle”和“Output Animation”之间，添加“Select Animation by Bool”，
-    “Play AS_Idle”连接“Select Animation by Bool”的true，“Play AS_Run”连接“Select Animation by Bool”的false，
+
+五、创建GameMode蓝图类
+1. 创建蓝图类，继承自“GameMode”，命名为“BP_GameMode”；
+2. 在“世界场景设置”中，设置“游戏模式/游戏模式重载”为“BP_GameMode”；
+3. 双击“BP_GameMode”，设置“默认Pawn类”为“BP_Character”；
+
+
+【常用函数】
+GetOwningActor      获取自身的Actor对象
+GetVelocity         获取指定Actor对象的速度
+AddMovementInput    添加指定Actor对象（默认为自身）的运动输入
+NearlyEqualFloat    两个浮点数是否近似相等
+
+
+
+State Machine：
+
+
+【常用设置】
+1. 摄像机预览视窗大小调整，在“偏好设置”菜单中找到“关卡编辑器/视口/摄像机预览大小”，设置合适的大小即可
